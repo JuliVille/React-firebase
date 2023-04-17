@@ -12,8 +12,9 @@ const Formulario = () =>{
     const [valoracion, setValoracion] = useState('');
     const [descripcion, setDescripcion] = useState('');
     let   [imagen, setImagen] = useState('');
+    const [id, setId] = useState(0);
     const [listaLibros, setListaLibros] = useState([]);
-
+    const [modoEdicion, setModoEdicion] = useState(false);
     
 
     useEffect(()=>{
@@ -75,6 +76,63 @@ const Formulario = () =>{
         }
     }
 
+    const editar = item =>{
+        setLibro(item.libroC)
+        setAutor(item.autorC)
+        setGenero(item.generoC)
+        setAño(item.añoC)
+        setPais(item.paisC)
+        setValoracion(item.valoracionC)
+        setDescripcion(item.descripcionC)
+        setImagen(item.imagenC)
+        setId(item.id)
+        setModoEdicion(true)
+    }
+
+    const editarLibro = async e =>{
+        e.preventDefault();
+        try {
+            const docRef = doc(db, 'libros', id);
+            await updateDoc(docRef,{
+                libroC: libro,
+                autorC:autor, 
+                generoC: genero,
+                añoC:año,
+                paisC: pais,
+                valoracionC:valoracion, 
+                descripcionC:descripcion,
+                imagenC:  imagen,
+            })
+
+            const nuevoArray = listaLibros.map(
+                item => item.id === id ? {
+                    id:id, 
+                    libroC: libro,
+                    autorC:autor, 
+                    generoC: genero,
+                    añoC:año,
+                    paisC: pais,
+                    valoracionC:valoracion, 
+                    descripcionC:descripcion,
+                    imagenC:  imagen
+                }: item
+            )
+
+            setListaLibros(nuevoArray)
+            setLibro('')
+            setAutor('')
+            setGenero('')
+            setAño('')
+            setPais('')
+            setValoracion('')
+            setDescripcion('')
+            setId('')
+            setModoEdicion(false)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     function getRandomInt(max) {
         return Math.floor(Math.random() * max);
     }
@@ -112,7 +170,7 @@ const Formulario = () =>{
                                 <td>{item.descripcionC}</td>
                                 <td><img src={item.imagenC} alt="" /></td>
                                 <td><button className="btn btn-danger btn-md fload-end" onClick={()=>eliminar(item.id)}>Eliminar</button></td>
-                                <td><button className="btn btn-success btn-md fload-end">Editar</button></td>
+                                <td><button className="btn btn-success btn-md fload-end" onClick={()=>editar(item)}>Editar</button></td>
                                 </tr>
                             ))
                         }  
@@ -120,8 +178,8 @@ const Formulario = () =>{
                     </table>
                 </div>
                 <div className="registroF col-3">
-                    <form onSubmit={guardarLibro} className="row g-2">
-                    <h4 className="text-center">Agregar Libro</h4>
+                    <h4 className="text-center">{modoEdicion ? 'Editar Celular': 'Agregar Celular'}</h4>
+                    <form onSubmit={modoEdicion ? editarLibro: guardarLibro} className="row g-2">
                         <div className="input-group"><input  type="text" className="form-control" placeholder="Ingrese libro" value={libro} onChange={(e)=>setLibro(e.target.value)} required/></div>
                         <div className="input-group"><input  type="text" className="form-control" placeholder="Ingrese autor" value={autor} onChange={(e)=>setAutor(e.target.value)} required/></div>                      
                         <div className="input-group "><input type="text" className="form-control" placeholder="Ingrese genero" value={genero} onChange={(e)=>setGenero(e.target.value)} required/></div>
@@ -129,7 +187,16 @@ const Formulario = () =>{
                         <div className="input-group"><input  type="text" className="form-control" placeholder="Ingrese pais origen" value={pais} onChange={(e)=>setPais(e.target.value)} required/></div>
                         <div className="input-group"><input  type="text" className="form-control" placeholder="Ingrese valoracion" value={valoracion} onChange={(e)=>setValoracion(e.target.value)} required/></div> 
                         <div className="input-group"><textarea type="text" className="form-control" placeholder="Ingrese descripcion" value={descripcion} onChange={(e)=>setDescripcion(e.target.value)} required></textarea></div>
-                        <button className="btn btn-dark btn-block" on="submit">Agregar</button>
+                        {
+                            modoEdicion ?
+                            (
+                                <>
+                                <button className="btn btn-success btn-block" on="submit">Editar</button>
+                                </>
+                            )
+                            :
+                            <button className="btn btn-dark btn-block" on="submit">Agregar</button>
+                        }
                     </form>
                 </div>
             </div>
