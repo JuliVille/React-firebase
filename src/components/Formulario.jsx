@@ -30,7 +30,7 @@ const Formulario = () =>{
             obtenerDatos();
     }, [])
 
-    const guardarLibro = async (e)=>{
+    const guardarCelular = async (e)=>{
         e.preventDefault();
         try{
             const data = await addDoc(collection(db,'libros'),{
@@ -133,6 +133,18 @@ const Formulario = () =>{
         }
     }
 
+    const cancelar = () =>{
+        setModoEdicion(false)
+        setLibro('')
+        setAutor('')
+        setGenero('')
+        setAño('')
+        setPais('')
+        setValoracion('')
+        setDescripcion('')
+        setId('')
+    }
+
     function getRandomInt(max) {
         return Math.floor(Math.random() * max);
     }
@@ -179,7 +191,7 @@ const Formulario = () =>{
                 </div>
                 <div className="registroF col-3">
                     <h4 className="text-center">{modoEdicion ? 'Editar Celular': 'Agregar Celular'}</h4>
-                    <form onSubmit={modoEdicion ? editarLibro: guardarLibro} className="row g-2">
+                    <form onSubmit={modoEdicion ? editarLibro: guardarCelular} className="row g-2">
                         <div className="input-group"><input  type="text" className="form-control" placeholder="Ingrese libro" value={libro} onChange={(e)=>setLibro(e.target.value)} required/></div>
                         <div className="input-group"><input  type="text" className="form-control" placeholder="Ingrese autor" value={autor} onChange={(e)=>setAutor(e.target.value)} required/></div>                      
                         <div className="input-group "><input type="text" className="form-control" placeholder="Ingrese genero" value={genero} onChange={(e)=>setGenero(e.target.value)} required/></div>
@@ -192,6 +204,7 @@ const Formulario = () =>{
                             (
                                 <>
                                 <button className="btn btn-success btn-block" on="submit">Editar</button>
+                                <button className="btn btn-dark btn-block" onClick={()=>cancelar()}>Cancelar</button>
                                 </>
                             )
                             :
