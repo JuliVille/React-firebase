@@ -67,6 +67,14 @@ const Formulario = () =>{
         }
     }
 
+    const eliminar = async id=>{
+        try {
+            await deleteDoc(doc(db, 'libros', id))
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     function getRandomInt(max) {
         return Math.floor(Math.random() * max);
     }
@@ -88,6 +96,7 @@ const Formulario = () =>{
                             <th scope="col">VALORACION</th>
                             <th scope="col size">DESCRIPCION</th>
                             <th scope="col">IMAGEN</th>
+                            <th colSpan="2">Accion</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -102,6 +111,8 @@ const Formulario = () =>{
                                 <td>{item.valoracionC}</td>
                                 <td>{item.descripcionC}</td>
                                 <td><img src={item.imagenC} alt="" /></td>
+                                <td><button className="btn btn-danger btn-md fload-end" onClick={()=>eliminar(item.id)}>Eliminar</button></td>
+                                <td><button className="btn btn-success btn-md fload-end">Editar</button></td>
                                 </tr>
                             ))
                         }  
