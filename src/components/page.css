@@ -1,0 +1,80 @@
+body{
+    background: linear-gradient(to bottom, #000000, #333333);
+    background-size: 1000px 1000px;
+}
+
+h1{
+    text-align: center;
+    color: azure
+}
+
+hr {
+    height: 2px;
+    background-color: white;
+  }
+
+.listado{
+    text-align: center;
+    color: azure
+}
+
+textarea{
+    height: 100px;
+}
+
+.input-group{
+    margin: 5px 13px 5px 13px;
+}
+
+.col-3{
+    background-color: #fff;
+    box-shadow: 0 0 10px 0 rgb(255, 255, 255, 0.8);
+    border-radius: 25px;
+}
+
+.col-3 h4{
+    color: black;
+    padding: 20px;
+    
+}
+
+.col-3 .btn-dark{
+    margin: 10px 13px 20px 13px;
+}
+
+.col-3 .btn-success{
+    margin: 0 13px 0 13px;
+}
+
+.registroF{
+    margin-top: 30px;
+    max-height: 550px;
+}
+
+td img {
+    background: no-repeat center / contain;
+    border-radius: 5%;
+    height: 60px;
+    width: 100%;
+  }
+  
+  table {
+    display: table;
+    margin-top: 30px;
+    box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.5);
+    border: 10px solid black;
+}
+  
+  td, th {
+    vertical-align: middle;
+  }
+  
+  table tbody, table thead {
+    text-align: center;
+  }
+  
+  td {
+    max-width: 80%;
+  }
+  
+

@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from "react"
 import {db} from '../firebase'
 import { collection,doc, addDoc, onSnapshot, deleteDoc, updateDoc } from "firebase/firestore";
+import './page.css';
 
 const Formulario = () =>{
 
@@ -30,7 +31,7 @@ const Formulario = () =>{
             obtenerDatos();
     }, [])
 
-    const guardarCelular = async (e)=>{
+    const guardarLibro = async (e)=>{
         e.preventDefault();
         try{
             const data = await addDoc(collection(db,'libros'),{
@@ -190,8 +191,8 @@ const Formulario = () =>{
                     </table>
                 </div>
                 <div className="registroF col-3">
-                    <h4 className="text-center">{modoEdicion ? 'Editar Celular': 'Agregar Celular'}</h4>
-                    <form onSubmit={modoEdicion ? editarLibro: guardarCelular} className="row g-2">
+                    <h4 className="text-center">{modoEdicion ? 'Editar libro': 'Agregar libro'}</h4>
+                    <form onSubmit={modoEdicion ? editarLibro: guardarLibro} className="row g-2">
                         <div className="input-group"><input  type="text" className="form-control" placeholder="Ingrese libro" value={libro} onChange={(e)=>setLibro(e.target.value)} required/></div>
                         <div className="input-group"><input  type="text" className="form-control" placeholder="Ingrese autor" value={autor} onChange={(e)=>setAutor(e.target.value)} required/></div>                      
                         <div className="input-group "><input type="text" className="form-control" placeholder="Ingrese genero" value={genero} onChange={(e)=>setGenero(e.target.value)} required/></div>
